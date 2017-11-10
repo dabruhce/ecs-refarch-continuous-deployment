@@ -71,7 +71,7 @@ Outputs:
   TargetGroup:
     Value: !Ref TargetGroup
 
-  ServiceUrl:
+  TestRpcServiceUrl:
     Description: URL of the load balancer for the sample service.
     Value: !Sub http://${LoadBalancer.DNSName}
 

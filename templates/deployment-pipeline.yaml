@@ -237,7 +237,7 @@ Resources:
                 ParameterOverrides: !Sub |
                   {
                     "Tag" : { "Fn::GetParam" : [ "BuildOutput", "build.json", "tag" ] },
-                    "DesiredCount": "1",
+                    "DesiredCount": "2",
                     "Cluster": "${Cluster}",
                     "TargetGroup": "${TargetGroup}",
                     "Repository": "${Repository}"
@@ -249,5 +249,5 @@ Resources:
 
 
 Outputs:
-  PipelineUrl:
+  TestRpcPipelineUrl:
     Value: !Sub https://console.aws.amazon.com/codepipeline/home?region=${AWS::Region}#/view/${Pipeline}

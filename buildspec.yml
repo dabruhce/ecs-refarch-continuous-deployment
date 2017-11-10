@@ -1,0 +1,16 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - chmod +x ./bin/deploy
+      - ./bin/deploy
+  pre_build:
+    commands:
+      - echo 123
+  build:
+    commands:
+      - echo Build started on `date`
+  post_build:
+    commands:
+      - echo post

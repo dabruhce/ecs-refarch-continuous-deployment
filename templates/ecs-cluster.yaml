@@ -1,7 +1,7 @@
 Parameters:
   InstanceType:
     Type: String
-    Default: t2.large
+    Default: t2.small
 
   ClusterSize:
     Type: Number
@@ -88,7 +88,7 @@ Resources:
       MinSize: !Ref ClusterSize
       MaxSize: !Ref ClusterSize
       DesiredCapacity: !Ref ClusterSize
-      Tags: 
+      Tags:
         - Key: Name
           Value: !Sub ${AWS::StackName} - ECS Host
           PropagateAtLaunch: true
