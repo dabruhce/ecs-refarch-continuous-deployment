@@ -34,6 +34,12 @@ Metadata:
         default: "Repo"
       GitHubBranch:
         default: "Branch"
+      BeGaspSqsPaymentWorkerGitHubUser:
+        default: "User"
+      BeGaspSqsPaymentWorkerGitHubRepo:
+        default: "Repo"
+      BeGaspSqsPaymentWorkerGitHubBranch:
+        default: "Branch"
       GitHubToken:
         default: "Personal Access Token"
     ParameterGroups:
@@ -44,6 +50,9 @@ Metadata:
           - GitHubBranch
           - GitHubUser
           - GitHubToken
+          - BeGaspSqsPaymentWorkerGitHubRepo
+          - BeGaspSqsPaymentWorkerGitHubBranch
+          - BeGaspSqsPaymentWorkerGitHubUser
 
 
 Resources:
@@ -66,6 +75,19 @@ Resources:
         GitHubToken: !Ref GitHubToken
         GitHubRepo: !Ref GitHubRepo
         GitHubBranch: !Ref GitHubBranch
+        TargetGroup: !GetAtt LoadBalancer.Outputs.TargetGroup
+        TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
+
+  BeGaspSqsPaymentWorkerDeploymentPipeline:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/services/ecs/BeGaspSqsPaymentWorker/deployment-pipeline.yaml
+      Parameters:
+        Cluster: !GetAtt Cluster.Outputs.ClusterName
+        GitHubUser: !Ref BeGaspSqsPaymentWorkerGitHubUser
+        GitHubToken: !Ref BeGaspSqsPaymentWorkerGitHubToken
+        GitHubRepo: !Ref BeGaspSqsPaymentWorkerGitHubRepo
+        GitHubBranch: !Ref BeGaspSqsPaymentWorkerGitHubBranch
         TargetGroup: !GetAtt LoadBalancer.Outputs.TargetGroup
         TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
 
@@ -101,3 +123,7 @@ Outputs:
   TestRpcPipelineUrl:
     Description: The continuous deployment pipeline in the AWS Management Console.
     Value: !GetAtt DeploymentPipeline.Outputs.TestRpcPipelineUrl
+
+  BeGaspSqsPaymentWorkerPipelineUrl:
+    Description: The continuous deployment pipeline in the AWS Management Console.
+    Value: !GetAtt DeploymentPipeline.Outputs.BeGaspSqsPaymentWorkerPipelineUrl

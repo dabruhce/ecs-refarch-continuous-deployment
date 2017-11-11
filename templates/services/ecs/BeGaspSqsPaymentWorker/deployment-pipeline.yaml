@@ -1,14 +1,14 @@
 Parameters:
-  GitHubRepo:
+  BeGaspSqsPaymentWorkerGitHubRepo:
     Type: String
 
-  GitHubBranch:
+  BeGaspSqsPaymentWorkerGitHubBranch:
     Type: String
 
-  GitHubToken:
+  BeGaspSqsPaymentWorkerGitHubToken:
     Type: String
 
-  GitHubUser:
+  BeGaspSqsPaymentWorkerGitHubUser:
     Type: String
 
   TargetGroup:
@@ -185,10 +185,10 @@ Resources:
                 Version: 1
                 Provider: GitHub
               Configuration:
-                Owner: !Ref GitHubUser
-                Repo: !Ref GitHubRepo
-                Branch: !Ref GitHubBranch
-                OAuthToken: !Ref GitHubToken
+                Owner: !Ref BeGaspSqsPaymentWorkerGitHubUser
+                Repo: !Ref BeGaspSqsPaymentWorkerGitHubRepo
+                Branch: !Ref BeGaspSqsPaymentWorkerGitHubBranch
+                OAuthToken: !Ref BeGaspSqsPaymentWorkerGitHubToken
               OutputArtifacts:
                 - Name: App
               RunOrder: 1
@@ -232,7 +232,7 @@ Resources:
                 ActionMode: CREATE_UPDATE
                 StackName: !Sub "${AWS::StackName}-Service"
                 Capabilities: CAPABILITY_NAMED_IAM
-                TemplatePath: Template::templates/services/ecs/ecs-demo-php-simple-app/service.yaml
+                TemplatePath: Template::templates/services/ecs/BeGaspSqsPaymentWorker/service.yaml
                 RoleArn: !GetAtt CloudFormationExecutionRole.Arn
                 ParameterOverrides: !Sub |
                   {
@@ -249,5 +249,5 @@ Resources:
 
 
 Outputs:
-  TestRpcPipelineUrl:
+  BeGaspSqsPaymentWorkerPipelineUrl:
     Value: !Sub https://console.aws.amazon.com/codepipeline/home?region=${AWS::Region}#/view/${Pipeline}
