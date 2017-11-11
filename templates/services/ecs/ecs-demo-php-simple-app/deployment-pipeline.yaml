@@ -233,9 +233,9 @@ Resources:
               Configuration:
                 ChangeSetName: Deploy
                 ActionMode: CREATE_UPDATE
-                StackName: !Sub "${AWS::StackName}-Service"
+                StackName: !Sub "${AWS::StackName}--Staging-Service"
                 Capabilities: CAPABILITY_NAMED_IAM
-                TemplatePath: Template::templates/services/ecs/ecs-demo-php-simple-app/service.yaml
+                TemplatePath: Template::templates/services/ecs/ecs-demo-php-simple-app/staging-service.yaml
                 RoleArn: !GetAtt CloudFormationExecutionRole.Arn
                 ParameterOverrides: !Sub |
                   {
