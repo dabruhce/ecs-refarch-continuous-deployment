@@ -14,7 +14,7 @@ regions=(
 #  us-west-2
 )
 
-zip deploy/templates.zip ecs-begasp-continuous-deployment.yaml templates/*
+zip -r deploy/templates.zip ecs-begasp-continuous-deployment.yaml templates/*
 
 for region in "${regions[@]}"
 do
