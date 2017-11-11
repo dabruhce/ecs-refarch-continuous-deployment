@@ -150,3 +150,6 @@ Resources:
 Outputs:
   StagingClusterName:
       Value: !Ref Cluster
+#    Export:
+#      Name:
+#        Fn::Sub: "${AWS::StackName}-SecurityGroupID"

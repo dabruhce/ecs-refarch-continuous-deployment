@@ -238,6 +238,33 @@ Resources:
                   {
                     "Tag" : { "Fn::GetParam" : [ "BuildOutput", "build.json", "tag" ] },
                     "DesiredCount": "3",
+                    "Cluster": "${StagingCluster}",
+                    "TargetGroup": "${TargetGroup}",
+                    "Repository": "${Repository}"
+                  }
+              InputArtifacts:
+                - Name: Template
+                - Name: BuildOutput
+              RunOrder: 1
+        - Name: Deploy
+          Actions:
+            - Name: Deploy
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: CloudFormation
+              Configuration:
+                ChangeSetName: Deploy
+                ActionMode: CREATE_UPDATE
+                StackName: !Sub "${AWS::StackName}-Service"
+                Capabilities: CAPABILITY_NAMED_IAM
+                TemplatePath: Template::templates/services/ecs/ecs-demo-php-simple-app/service.yaml
+                RoleArn: !GetAtt CloudFormationExecutionRole.Arn
+                ParameterOverrides: !Sub |
+                  {
+                    "Tag" : { "Fn::GetParam" : [ "BuildOutput", "build.json", "tag" ] },
+                    "DesiredCount": "3",
                     "Cluster": "${Cluster}",
                     "TargetGroup": "${TargetGroup}",
                     "Repository": "${Repository}"

@@ -41,7 +41,7 @@ Resources:
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
-        - ContainerName: simple-app
+        - ContainerName: BeGaspSqsPaymentWorker
           ContainerPort: 81
           TargetGroupArn: !Ref TargetGroup
 
