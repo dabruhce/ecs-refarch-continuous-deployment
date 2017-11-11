@@ -140,4 +140,4 @@ Outputs:
 
   BeGaspSqsPaymentWorkerPipelineUrl:
     Description: The continuous deployment pipeline in the AWS Management Console.
-    Value: !GetAtt DeploymentPipeline.Outputs.BeGaspSqsPaymentWorkerPipelineUrl
+    Value: !GetAtt BeGaspSqsPaymentWorkerDeploymentPipeline.Outputs.BeGaspSqsPaymentWorkerPipelineUrl
