@@ -16,30 +16,19 @@ Resources:
           phases:
             pre_build:
               commands:
-                - echo Logging in to Amazon ECR...
-                - $(aws ecr get-login --region us-east-1)
+                - npm install -g serverless
             build:
               commands:
-                - echo Build started on `date`
-                - echo Building the Docker image...
-                - docker build -t begaspsqspaymentworker .
-                - docker tag begaspsqspaymentworker:latest 290373986345.dkr.ecr.us-east-1.amazonaws.com/begaspsqspaymentworker:latest
-            post_build:
-              commands:
-                - echo Build completed on `date`
-                - echo Pushing the Docker image...
-                - docker push 290373986345.dkr.ecr.us-east-1.amazonaws.com/begaspsqspaymentworker:latest
-  #          artifacts:
-#            type: zip
-#            files:
-#              - packed-template.yaml
+                - echo $environment
+                - serverless package --stage $environment --region us-east-1
+                - serverless deploy --stage $environment --region us-east-1
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
         Image: aws/codebuild/docker:1.12.1
         EnvironmentVariables:
         - Name: environment
-          Value: dev
+          Value: stage
       Artifacts:
         Type: CODEPIPELINE
 #      Source:
@@ -61,6 +50,17 @@ Resources:
       #ServiceRole: code-build-BeGaspSqsErrorHandlerWorker-service-role
       Source:
         Type: CODEPIPELINE
+        BuildSpec: |
+          version: 0.2
+          phases:
+            pre_build:
+              commands:
+                - npm install -g serverless
+            build:
+              commands:
+                - echo $environment
+                - serverless package --stage $environment --region us-east-1
+                - serverless deploy --stage $environment --region us-east-1
 #        BuildSpec: |
 #          version: 0.2
 #          phases:
@@ -78,8 +78,6 @@ Resources:
         EnvironmentVariables:
         - Name: environment
           Value: prod
-        - Name: ecs-cluster
-          Value: ecs55-Cluster-LLG6F38OH3WB
       Artifacts:
         Type: CODEPIPELINE
 #      Source:
