@@ -222,9 +222,9 @@ Resources:
               OutputArtifacts:
                 - Name: BuildOutput
               RunOrder: 1
-        - Name: Deploy
+        - Name: DeployStaging
           Actions:
-            - Name: Deploy
+            - Name: DeployStaging
               ActionTypeId:
                 Category: Deploy
                 Owner: AWS
@@ -240,7 +240,7 @@ Resources:
                 ParameterOverrides: !Sub |
                   {
                     "Tag" : { "Fn::GetParam" : [ "BuildOutput", "build.json", "tag" ] },
-                    "DesiredCount": "3",
+                    "DesiredCount": "2",
                     "Cluster": "${StagingCluster}",
                     "TargetGroup": "${TargetGroup}",
                     "Repository": "${Repository}"

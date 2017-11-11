@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  SecretValue:
+    Description: Sssh, it's a secret
+    Type: String
+    NoEcho: true
+Resources:
+  SecureParam:
+    Type: Custom::CfnParamStore
+    Properties:
+      ServiceToken: !ImportValue CfnParamStore
+      Type: SecureString
+      Value: !Ref SecretValue
+Outputs:
+  ParamArn:
+    Description: Arn of param in SSM param store
+    Value: !GetAtt SecureParam.Arn
