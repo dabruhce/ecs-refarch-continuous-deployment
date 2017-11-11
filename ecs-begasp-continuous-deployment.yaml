@@ -19,6 +19,20 @@ Parameters:
     Default: master
     Description: The branch of the repo to continuously deploy.
 
+  BeGaspSqsPaymentWorkerGitHubUser:
+    Type: String
+    Description: Your username on GitHub.
+
+  BeGaspSqsPaymentWorkerGitHubRepo:
+    Type: String
+    Default: ecs-demo-php-simple-app
+    Description: The repo name of the sample service.
+
+  BeGaspSqsPaymentWorkerGitHubBranch:
+    Type: String
+    Default: master
+    Description: The branch of the repo to continuously deploy.
+
   GitHubToken:
     Type: String
     Description: >
@@ -84,10 +98,10 @@ Resources:
       TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/services/ecs/BeGaspSqsPaymentWorker/deployment-pipeline.yaml
       Parameters:
         Cluster: !GetAtt Cluster.Outputs.ClusterName
-        GitHubUser: !Ref BeGaspSqsPaymentWorkerGitHubUser
-        GitHubToken: !Ref BeGaspSqsPaymentWorkerGitHubToken
-        GitHubRepo: !Ref BeGaspSqsPaymentWorkerGitHubRepo
-        GitHubBranch: !Ref BeGaspSqsPaymentWorkerGitHubBranch
+        BeGaspSqsPaymentWorkerGitHubUser: !Ref BeGaspSqsPaymentWorkerGitHubUser
+        GitHubToken: !Ref GitHubToken
+        BeGaspSqsPaymentWorkerGitHubRepo: !Ref BeGaspSqsPaymentWorkerGitHubRepo
+        BeGaspSqsPaymentWorkerGitHubBranch: !Ref BeGaspSqsPaymentWorkerGitHubBranch
         TargetGroup: !GetAtt LoadBalancer.Outputs.TargetGroup
         TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
 
