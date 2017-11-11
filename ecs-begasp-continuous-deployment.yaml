@@ -25,7 +25,7 @@ Parameters:
 
   BeGaspSqsPaymentWorkerGitHubRepo:
     Type: String
-    Default: ecs-demo-php-simple-app
+    Default: BeGaspSqsPaymentWorker
     Description: The repo name of the sample service.
 
   BeGaspSqsPaymentWorkerGitHubBranch:
