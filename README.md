@@ -100,3 +100,23 @@ This reference architecture sample is [licensed][license] under Apache 2.0.
 [continuous-deployment]: https://aws.amazon.com/devops/continuous-delivery/
 [architecture]: images/architecture.pdf
 [license]: LICENSE
+
+
+## Steps
+
+* fork tkntobfrk/ecs-refarch-continuous-deployment
+* fork tkntobfrk/ecs-demo-php-simple-app
+*
+
+## cloudformation template
+
+````json
+
+{
+	"GitHubUser": "tkntobfrk",
+	"GitHubToken": "",
+  "GitHubBranch": "master",
+  "GitHubRepo": "ecs-demo-php-simple-app"
+}
+
+````

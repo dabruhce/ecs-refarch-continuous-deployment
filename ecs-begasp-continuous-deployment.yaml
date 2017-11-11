@@ -59,7 +59,7 @@ Resources:
   DeploymentPipeline:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/deployment-pipeline.yaml
+      TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/services/ecs/ecs-demo-php-simple-app/deployment-pipeline.yaml
       Parameters:
         Cluster: !GetAtt Cluster.Outputs.ClusterName
         GitHubUser: !Ref GitHubUser
@@ -68,6 +68,11 @@ Resources:
         GitHubBranch: !Ref GitHubBranch
         TargetGroup: !GetAtt LoadBalancer.Outputs.TargetGroup
         TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
+
+  SqsQueues:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/sqs.yaml
 
   LoadBalancer:
     Type: AWS::CloudFormation::Stack

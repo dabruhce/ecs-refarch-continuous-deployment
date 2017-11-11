@@ -1,0 +1,124 @@
+Resources:
+  ArtifactStoreBucket:
+    Type: AWS::S3::Bucket
+  DevCodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: build-docker-container-codebuild
+      Description: A description about my project
+      ServiceRole: !Ref CodeBuildRole
+      #ServiceRole: !GetAtt ServiceRole.Arn
+      #ServiceRole: code-build-BeGaspSqsErrorHandlerWorker-service-role
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: |
+          version: 0.2
+          phases:
+            pre_build:
+              commands:
+                - echo Logging in to Amazon ECR...
+                - $(aws ecr get-login --region us-east-1)
+            build:
+              commands:
+                - echo Build started on `date`
+                - echo Building the Docker image...
+                - docker build -t begaspsqspaymentworker .
+                - docker tag begaspsqspaymentworker:latest 290373986345.dkr.ecr.us-east-1.amazonaws.com/begaspsqspaymentworker:latest
+            post_build:
+              commands:
+                - echo Build completed on `date`
+                - echo Pushing the Docker image...
+                - docker push 290373986345.dkr.ecr.us-east-1.amazonaws.com/begaspsqspaymentworker:latest
+  #          artifacts:
+#            type: zip
+#            files:
+#              - packed-template.yaml
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/docker:1.12.1
+        EnvironmentVariables:
+        - Name: environment
+          Value: dev
+      Artifacts:
+        Type: CODEPIPELINE
+#      Source:
+#        Location: codebuild-demo-test/0123ab9a371ebf0187b0fe5614fbb72c
+#        Type: S3
+      TimeoutInMinutes: 10
+      Tags:
+        - Key: Key1
+          Value: Value1
+        - Key: Key2
+          Value: Value2
+  ProdCodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: myProjectName
+      Description: A description about my project
+      ServiceRole: !Ref CodeBuildRole
+      #ServiceRole: !GetAtt ServiceRole.Arn
+      #ServiceRole: code-build-BeGaspSqsErrorHandlerWorker-service-role
+      Source:
+        Type: CODEPIPELINE
+#        BuildSpec: |
+#          version: 0.2
+#          phases:
+#            build:
+#              commands:
+#                - echo 123
+#          artifacts:
+#            type: zip
+#            files:
+#              - packed-template.yaml
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/docker:1.12.1
+        EnvironmentVariables:
+        - Name: environment
+          Value: prod
+        - Name: ecs-cluster
+          Value: ecs55-Cluster-LLG6F38OH3WB
+      Artifacts:
+        Type: CODEPIPELINE
+#      Source:
+#        Location: codebuild-demo-test/0123ab9a371ebf0187b0fe5614fbb72c
+#        Type: S3
+      TimeoutInMinutes: 10
+      Tags:
+        - Key: Key1
+          Value: Value1
+        - Key: Key2
+          Value: Value2
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          Effect: Allow
+          Principal:
+            Service: codebuild.amazonaws.com
+          Action: sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: logs
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: 'arn:aws:logs:*:*:*'
+        - PolicyName: read-write-artifactstore-bucket
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource: !Sub '${ArtifactStoreBucket.Arn}/*'
