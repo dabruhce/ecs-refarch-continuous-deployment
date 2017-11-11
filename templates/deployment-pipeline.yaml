@@ -237,7 +237,7 @@ Resources:
                 ParameterOverrides: !Sub |
                   {
                     "Tag" : { "Fn::GetParam" : [ "BuildOutput", "build.json", "tag" ] },
-                    "DesiredCount": "2",
+                    "DesiredCount": "3",
                     "Cluster": "${Cluster}",
                     "TargetGroup": "${TargetGroup}",
                     "Repository": "${Repository}"
