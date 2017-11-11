@@ -79,6 +79,15 @@ Resources:
         Subnets: !GetAtt VPC.Outputs.Subnets
         VpcId: !GetAtt VPC.Outputs.VpcId
 
+  StagingCluster:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/infrastructure/staging/ecs-cluster.yaml
+      Parameters:
+        SourceSecurityGroup: !GetAtt LoadBalancer.Outputs.SecurityGroup
+        Subnets: !GetAtt VPC.Outputs.Subnets
+        VpcId: !GetAtt VPC.Outputs.VpcId
+
   DeploymentPipeline:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -108,7 +117,7 @@ Resources:
   SqsQueues:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/sqs.yaml
+      TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/infrastructure/production/sqs.yaml
 
   LoadBalancer:
     Type: AWS::CloudFormation::Stack
