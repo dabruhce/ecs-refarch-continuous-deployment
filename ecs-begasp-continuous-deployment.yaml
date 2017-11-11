@@ -138,6 +138,6 @@ Outputs:
     Description: The continuous deployment pipeline in the AWS Management Console.
     Value: !GetAtt DeploymentPipeline.Outputs.TestRpcPipelineUrl
 
-  BeGaspSqsPaymentWorkerPipelineUrl:
-    Description: The continuous deployment pipeline in the AWS Management Console.
-    Value: !GetAtt BeGaspSqsPaymentWorkerDeploymentPipeline.Outputs.BeGaspSqsPaymentWorkerPipelineUrl
+#  BeGaspSqsPaymentWorkerPipelineUrl:
+#    Description: The continuous deployment pipeline in the AWS Management Console.
+#    Value: !GetAtt BeGaspSqsPaymentWorkerDeploymentPipeline.Outputs.BeGaspSqsPaymentWorkerPipelineUrl

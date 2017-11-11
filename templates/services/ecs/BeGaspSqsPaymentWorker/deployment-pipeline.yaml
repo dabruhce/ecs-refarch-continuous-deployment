@@ -247,7 +247,6 @@ Resources:
                 - Name: BuildOutput
               RunOrder: 1
 
-
 Outputs:
   BeGaspSqsPaymentWorkerPipelineUrl:
     Value: !Sub https://console.aws.amazon.com/codepipeline/home?region=${AWS::Region}#/view/${Pipeline}

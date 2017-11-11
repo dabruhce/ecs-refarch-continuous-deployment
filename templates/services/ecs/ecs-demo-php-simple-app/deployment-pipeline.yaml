@@ -247,7 +247,6 @@ Resources:
                 - Name: BuildOutput
               RunOrder: 1
 
-
 Outputs:
   TestRpcPipelineUrl:
     Value: !Sub https://console.aws.amazon.com/codepipeline/home?region=${AWS::Region}#/view/${Pipeline}
