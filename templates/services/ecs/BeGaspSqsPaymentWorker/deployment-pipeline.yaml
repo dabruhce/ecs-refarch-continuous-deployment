@@ -5,7 +5,7 @@ Parameters:
   BeGaspSqsPaymentWorkerGitHubBranch:
     Type: String
 
-  BeGaspSqsPaymentWorkerGitHubToken:
+  GitHubToken:
     Type: String
 
   BeGaspSqsPaymentWorkerGitHubUser:
@@ -188,7 +188,7 @@ Resources:
                 Owner: !Ref BeGaspSqsPaymentWorkerGitHubUser
                 Repo: !Ref BeGaspSqsPaymentWorkerGitHubRepo
                 Branch: !Ref BeGaspSqsPaymentWorkerGitHubBranch
-                OAuthToken: !Ref BeGaspSqsPaymentWorkerGitHubToken
+                OAuthToken: !Ref GitHubToken
               OutputArtifacts:
                 - Name: App
               RunOrder: 1
