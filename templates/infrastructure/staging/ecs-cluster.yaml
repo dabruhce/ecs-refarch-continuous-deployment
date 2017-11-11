@@ -148,7 +148,7 @@ Resources:
 
 
 Outputs:
-  StagingClusterName:
+  ClusterName:
       Value: !Ref Cluster
 #    Export:
 #      Name:
