@@ -74,6 +74,11 @@ Resources:
                 Action:
                   - s3:*
                   - cloudformation:*
+                  - logs:*
+              - Resource: "arn:aws:apigateway:*::/restapis/*"
+                Effect: Allow
+                Action:
+                  - apigateway:*
               - Resource: !Sub arn:aws:s3:::${ArtifactBucket}/*
                 Effect: Allow
                 Action:
