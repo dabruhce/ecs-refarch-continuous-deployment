@@ -77,10 +77,10 @@ Outputs:
 
   SecurityGroup:
     Value: !Ref SecurityGroup
-    Export:
-      Name: SecurityGroupExport
+#    Export:
+#      Name: SecurityGroupExport
 
   LoadBalance:
     Value: !Ref LoadBalancer
-    Export:
-      Name: LoadBalancerExport
+#    Export:
+#      Name: LoadBalancerExport
