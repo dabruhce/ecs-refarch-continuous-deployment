@@ -158,7 +158,7 @@ Resources:
       Name: !Ref AWS::StackName
       ServiceRole: !Ref CodeBuildServiceRole
 
-  CodeBuildProjectStaging:
+  CodeBuildProjectProduction:
     Type: AWS::CodeBuild::Project
     Properties:
       Artifacts:
@@ -210,7 +210,7 @@ Resources:
                 Provider: GitHub
               Configuration:
                 Owner: !Ref GitHubUser
-                Repo: !Ref LambdaLivestreamcaptureApigateway
+                Repo: !Ref LambdaLivestreamcaptureApigatewayGitHubRepo
                 Branch: !Ref GitHubBranch
                 OAuthToken: !Ref GitHubToken
               OutputArtifacts:
