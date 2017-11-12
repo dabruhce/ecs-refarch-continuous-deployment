@@ -1,14 +1,14 @@
 Parameters:
-  ecs-ethereum-network-node-GitHubRepo:
+  EcsEthereumNetworkNodeGitHubRepo:
     Type: String
 
-  ecs-ethereum-network-node-GitHubBranch:
+  GitHubBranch:
     Type: String
 
   GitHubToken:
     Type: String
 
-  ecs-ethereum-network-node-GitHubUser:
+  GitHubUser:
     Type: String
 
   TargetGroup:
@@ -188,9 +188,9 @@ Resources:
                 Version: 1
                 Provider: GitHub
               Configuration:
-                Owner: !Ref ecs-ethereum-network-node-GitHubUser
-                Repo: !Ref ecs-ethereum-network-node-GitHubRepo
-                Branch: !Ref ecs-ethereum-network-node-GitHubBranch
+                Owner: !Ref GitHubUser
+                Repo: !Ref EcsEthereumNetworkNodeGitHubRepo
+                Branch: !Ref GitHubBranch
                 OAuthToken: !Ref GitHubToken
               OutputArtifacts:
                 - Name: App

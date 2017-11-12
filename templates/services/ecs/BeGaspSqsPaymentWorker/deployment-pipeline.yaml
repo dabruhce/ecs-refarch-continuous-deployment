@@ -2,13 +2,13 @@ Parameters:
   BeGaspSqsPaymentWorkerGitHubRepo:
     Type: String
 
-  BeGaspSqsPaymentWorkerGitHubBranch:
+  GitHubBranch:
     Type: String
 
   GitHubToken:
     Type: String
 
-  BeGaspSqsPaymentWorkerGitHubUser:
+  GitHubUser:
     Type: String
 
   TargetGroup:
@@ -185,9 +185,9 @@ Resources:
                 Version: 1
                 Provider: GitHub
               Configuration:
-                Owner: !Ref BeGaspSqsPaymentWorkerGitHubUser
+                Owner: !Ref GitHubUser
                 Repo: !Ref BeGaspSqsPaymentWorkerGitHubRepo
-                Branch: !Ref BeGaspSqsPaymentWorkerGitHubBranch
+                Branch: !Ref GitHubBranch
                 OAuthToken: !Ref GitHubToken
               OutputArtifacts:
                 - Name: App
