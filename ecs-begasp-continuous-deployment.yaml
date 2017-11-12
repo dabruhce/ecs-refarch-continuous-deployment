@@ -2,7 +2,7 @@ Description: >
   This template illustrates how to use AWS CodeBuild and AWS CodePipeline to
   achieve continuous deployment of source code from a GitHub repository via a
   Docker container to an Amazon EC2 Container Service cluster.
-
+#ecs-ethereum-network-node-
 
 Parameters:
   GitHubUser:
@@ -33,6 +33,20 @@ Parameters:
     Default: master
     Description: The branch of the repo to continuously deploy.
 
+  ecs-ethereum-network-node-GitHubUser:
+    Type: String
+    Description: Your username on GitHub.
+
+  ecs-ethereum-network-node-GitHubRepo:
+    Type: String
+    Default: BeGaspSqsPaymentWorker
+    Description: The repo name of the sample service.
+
+  ecs-ethereum-network-node-GitHubBranch:
+    Type: String
+    Default: master
+    Description: The branch of the repo to continuously deploy.
+
   GitHubToken:
     Type: String
     Description: >
@@ -54,6 +68,12 @@ Metadata:
         default: "Repo"
       BeGaspSqsPaymentWorkerGitHubBranch:
         default: "Branch"
+      ecs-ethereum-network-node-GitHubUser:
+        default: "User"
+      ecs-ethereum-network-node-GitHubRepo:
+        default: "Repo"
+      ecs-ethereum-network-node-GitHubBranch:
+        default: "Branch"
       GitHubToken:
         default: "Personal Access Token"
     ParameterGroups:
@@ -67,7 +87,9 @@ Metadata:
           - BeGaspSqsPaymentWorkerGitHubRepo
           - BeGaspSqsPaymentWorkerGitHubBranch
           - BeGaspSqsPaymentWorkerGitHubUser
-
+          - ecs-ethereum-network-node-GitHubRepo
+          - ecs-ethereum-network-node-GitHubBranch
+          - ecs-ethereum-network-node-GitHubUser
 
 Resources:
   Cluster:
@@ -112,6 +134,19 @@ Resources:
         GitHubToken: !Ref GitHubToken
         BeGaspSqsPaymentWorkerGitHubRepo: !Ref BeGaspSqsPaymentWorkerGitHubRepo
         BeGaspSqsPaymentWorkerGitHubBranch: !Ref BeGaspSqsPaymentWorkerGitHubBranch
+        TargetGroup: !GetAtt LoadBalancer.Outputs.TargetGroup
+        TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
+
+  EcsEthereumNetworkNodePipeline:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/services/ecs/ecs-ethereum-network-node/deployment-pipeline.yaml
+      Parameters:
+        Cluster: !GetAtt Cluster.Outputs.ClusterName
+        BeGaspSqsPaymentWorkerGitHubUser: !Ref ecs-ethereum-network-node-GitHubUser
+        GitHubToken: !Ref GitHubToken
+        BeGaspSqsPaymentWorkerGitHubRepo: !Ref ecs-ethereum-network-node-GitHubRepo
+        BeGaspSqsPaymentWorkerGitHubBranch: !Ref ecs-ethereum-network-node-GitHubBranch
         TargetGroup: !GetAtt LoadBalancer.Outputs.TargetGroup
         TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
 

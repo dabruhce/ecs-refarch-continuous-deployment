@@ -41,21 +41,21 @@ Resources:
       DesiredCount: !Ref DesiredCount
       TaskDefinition: !Ref TaskDefinition
       LoadBalancers:
-        - ContainerName: BeGaspSqsPaymentWorker
-          ContainerPort: 82
+        - ContainerName: ecs-ethereum-network-node
+          ContainerPort: 8545
           TargetGroupArn: !Ref TargetGroup
 
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: !Sub ${AWS::StackName}-BeGaspSqsPaymentWorker
+      Family: !Sub ${AWS::StackName}-ecs-ethereum-network-node
       ContainerDefinitions:
-        - Name: BeGaspSqsPaymentWorker
+        - Name: ecs-ethereum-network-node
           Image: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${Repository}:${Tag}
           Essential: true
           Memory: 128
           PortMappings:
-            - ContainerPort: 82
+            - ContainerPort: 8545
           Environment:
             - Name: Tag
               Value: !Ref Tag
