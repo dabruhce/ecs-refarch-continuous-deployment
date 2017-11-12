@@ -250,7 +250,7 @@ Resources:
               InputArtifacts:
                 - Name: App
               OutputArtifacts:
-                - Name: BuildOutput
+                - Name: BuildOutputProd
               RunOrder: 1
 
 Outputs:
