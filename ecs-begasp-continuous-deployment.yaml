@@ -29,6 +29,11 @@ Parameters:
     Default: BeGaspSqsPaymentWorker
     Description: The repo name of the sample service.
 
+  LambdaLivestreamcaptureApigatewayGitHubRepo:
+    Type: String
+    Default: BeGaspSqsPaymentWorker
+    Description: The repo name of the sample service.
+
   GitHubToken:
     Type: String
     Description: >
@@ -48,6 +53,8 @@ Metadata:
         default: "Repo"
       EcsEthereumNetworkNodeGitHubRepo:
         default: "Repo"
+      LambdaLivestreamcaptureApigatewayGitHubRepo:
+        default: "Repo"
       GitHubToken:
         default: "Personal Access Token"
     ParameterGroups:
@@ -60,6 +67,7 @@ Metadata:
           - GitHubToken
           - BeGaspSqsPaymentWorkerGitHubRepo
           - EcsEthereumNetworkNodeGitHubRepo
+          - LambdaLivestreamcaptureApigatewayGitHubRepo
 
 Resources:
   Cluster:
@@ -105,6 +113,17 @@ Resources:
         BeGaspSqsPaymentWorkerGitHubRepo: !Ref BeGaspSqsPaymentWorkerGitHubRepo
         GitHubBranch: !Ref GitHubBranch
         TargetGroup: !GetAtt LoadBalancer.Outputs.TargetGroup
+        TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
+
+  LambdaLivestreamcaptureApigatewayPipeline:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/services/lambda/lambda-livestreamcapture-apigateway/deployment-pipeline.yaml
+      Parameters:
+        GitHubUser: !Ref GitHubUser
+        GitHubToken: !Ref GitHubToken
+        LambdaLivestreamcaptureApigatewayGitHubRepo: !Ref BeGaspSqsPaymentWorkerGitHubRepo
+        GitHubBranch: !Ref GitHubBranch
         TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
 
   EcsEthereumNetworkNodePipeline:
