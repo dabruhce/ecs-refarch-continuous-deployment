@@ -84,7 +84,9 @@ Resources:
                   - lambda:*
               - Resource:
                 - arn:aws:apigateway:*::/restapis
-                - arn:aws:apigateway:*::/restapis/*
+                - arn:aws:apigateway:*::/restapis/*,
+                - arn:aws:apigateway:us-east-1::/usageplans,
+                - arn:aws:apigateway:us-east-1::/usageplans/*
                 Effect: Allow
                 Action:
                   - apigateway:GET
