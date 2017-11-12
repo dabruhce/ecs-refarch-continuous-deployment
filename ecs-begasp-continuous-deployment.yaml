@@ -119,6 +119,7 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/services/lambda/lambda-livestreamcapture-apigateway/deployment-pipeline.yaml
+      DependsOn: BeGaspSqsPaymentWorkerDeploymentPipeline
       Parameters:
         GitHubUser: !Ref GitHubUser
         GitHubToken: !Ref GitHubToken
@@ -129,7 +130,6 @@ Resources:
   EcsEthereumNetworkNodePipeline:
     Type: AWS::CloudFormation::Stack
     Properties:
-      DependsOn: BeGaspSqsPaymentWorkerDeploymentPipeline
       TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/services/ecs/ecs-ethereum-network-node/deployment-pipeline.yaml
       Parameters:
         Cluster: !GetAtt Cluster.Outputs.ClusterName
