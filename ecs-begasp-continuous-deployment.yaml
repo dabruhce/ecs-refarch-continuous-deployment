@@ -117,9 +117,9 @@ Resources:
 
   LambdaLivestreamcaptureApigatewayPipeline:
     Type: AWS::CloudFormation::Stack
+    DependsOn: BeGaspSqsPaymentWorkerDeploymentPipeline
     Properties:
       TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/services/lambda/lambda-livestreamcapture-apigateway/deployment-pipeline.yaml
-      DependsOn: BeGaspSqsPaymentWorkerDeploymentPipeline
       Parameters:
         GitHubUser: !Ref GitHubUser
         GitHubToken: !Ref GitHubToken
