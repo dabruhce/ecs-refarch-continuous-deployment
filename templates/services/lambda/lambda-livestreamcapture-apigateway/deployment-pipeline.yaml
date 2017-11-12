@@ -75,10 +75,25 @@ Resources:
                   - s3:*
                   - cloudformation:*
                   - logs:*
-              - Resource: "arn:aws:apigateway:*::/restapis/*"
+                  - iam:CreateRole,
+                  - iam:DeleteRole,
+                  - iam:GetRole,
+                  - iam:PassRole,
+                  - iam:DeleteRolePolicy,
+                  - iam:PutRolePolicy,
+                  - lambda:*
+              - Resource:
+                - arn:aws:apigateway:*::/restapis
+                - arn:aws:apigateway:*::/restapis/*
                 Effect: Allow
                 Action:
-                  - apigateway:*
+                  - apigateway:GET
+                  - apigateway:HEAD
+                  - apigateway:OPTIONS
+                  - apigateway:PATCH
+                  - apigateway:POST
+                  - apigateway:PUT
+                  - apigateway:DELETE
               - Resource: !Sub arn:aws:s3:::${ArtifactBucket}/*
                 Effect: Allow
                 Action:
