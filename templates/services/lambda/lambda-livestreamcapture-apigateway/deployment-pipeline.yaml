@@ -218,7 +218,8 @@ Resources:
             Value: production
       Name: lambda-livestreamcapture-apigateway-production
       ServiceRole: !Ref CodeBuildServiceRole
-
+#add to environment
+#!Ref GitHubBranch
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
