@@ -73,6 +73,7 @@ Resources:
                 Effect: Allow
                 Action:
                   - s3:*
+                  - cloudformation:*
               - Resource: !Sub arn:aws:s3:::${ArtifactBucket}/*
                 Effect: Allow
                 Action:
