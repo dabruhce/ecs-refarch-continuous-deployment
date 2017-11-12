@@ -122,7 +122,7 @@ Resources:
       Parameters:
         GitHubUser: !Ref GitHubUser
         GitHubToken: !Ref GitHubToken
-        LambdaLivestreamcaptureApigatewayGitHubRepo: !Ref BeGaspSqsPaymentWorkerGitHubRepo
+        LambdaLivestreamcaptureApigatewayGitHubRepo: !Ref LambdaLivestreamcaptureApigatewayGitHubRepo
         GitHubBranch: !Ref GitHubBranch
         TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
 
