@@ -85,6 +85,10 @@ Resources:
                   - ecr:InitiateLayerUpload
                   - ecr:UploadLayerPart
                   - ecr:CompleteLayerUpload
+              - Resource: arn:aws:cloudformation:us-east-1:290373986345:stack/begasp-ad-validation-api-staging/*
+                Effect: Allow
+                Action:
+                  - cloudformation:*
 
   CodePipelineServiceRole:
     Type: AWS::IAM::Role
