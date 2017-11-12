@@ -278,5 +278,5 @@ Resources:
               RunOrder: 1
 
 Outputs:
-  ecs-ethereum-network-node-PipelineUrl:
+  EcsEthereumNetworkNodeGitHubRepo:
     Value: !Sub https://console.aws.amazon.com/codepipeline/home?region=${AWS::Region}#/view/${Pipeline}
