@@ -115,7 +115,7 @@ Resources:
         Cluster: !GetAtt Cluster.Outputs.ClusterName
         GitHubUser: !Ref GitHubUser
         GitHubToken: !Ref GitHubToken
-        EcsEthereumNetworkNodeGitHubRepo: !Ref ecs-ethereum-network-node-GitHubRepo
+        EcsEthereumNetworkNodeGitHubRepo: !Ref EcsEthereumNetworkNodeGitHubRepo
         GitHubBranch: !Ref GitHubBranch
         TargetGroup: !GetAtt LoadBalancer.Outputs.TargetGroup
         TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
