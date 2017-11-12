@@ -129,6 +129,7 @@ Resources:
   EcsEthereumNetworkNodePipeline:
     Type: AWS::CloudFormation::Stack
     Properties:
+      DependsOn: BeGaspSqsPaymentWorkerDeploymentPipeline
       TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/services/ecs/ecs-ethereum-network-node/deployment-pipeline.yaml
       Parameters:
         Cluster: !GetAtt Cluster.Outputs.ClusterName
