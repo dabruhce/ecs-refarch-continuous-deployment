@@ -14,6 +14,8 @@ Parameters:
   TemplateBucket:
     Type: String
 
+  AwsCfnStack:
+    Type: String
 
 Resources:
   Repository:
@@ -186,6 +188,8 @@ Resources:
             Value: !Ref AWS::Region
           - Name: ENVIRONMENT
             Value: staging
+          - Name: StackName
+            Value: !Ref AwsCfnStack
       Name: !Ref AWS::StackName
       ServiceRole: !Ref CodeBuildServiceRole
 
@@ -216,6 +220,8 @@ Resources:
             Value: !Ref AWS::Region
           - Name: ENVIRONMENT
             Value: production
+          - Name: StackName
+            Value: !Ref AwsCfnStack
       Name: lambda-livestreamcapture-apigateway-production
       ServiceRole: !Ref CodeBuildServiceRole
 #add to environment

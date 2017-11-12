@@ -126,7 +126,8 @@ Resources:
         LambdaLivestreamcaptureApigatewayGitHubRepo: !Ref LambdaLivestreamcaptureApigatewayGitHubRepo
         GitHubBranch: !Ref GitHubBranch
         TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
-
+        AwsCfnStack: !Ref AWS::StackName
+#!Ref AWS::StackName
   EcsEthereumNetworkNodePipeline:
     Type: AWS::CloudFormation::Stack
     Properties:
