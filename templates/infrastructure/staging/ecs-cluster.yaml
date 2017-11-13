@@ -58,8 +58,8 @@ Resources:
         }
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
-#        - arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM
-#        - arn:aws:iam::290373986345:policy/ECS-CloudWatchLogs
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM
+        - arn:aws:iam::290373986345:policy/ECS-CloudWatchLogs
 
   InstanceProfile:
     Type: AWS::IAM::InstanceProfile
@@ -145,8 +145,8 @@ Resources:
       UserData:
         "Fn::Base64": !Sub |
           #!/bin/bash
-          #yum install -y https://s3-us-west-1.amazonaws.com/amazon-ssm-us-west-1/latest/linux_amd64/amazon-ssm-agent.rpm
-          #start amazon-ssm-agent
+          yum install -y https://s3-us-west-1.amazonaws.com/amazon-ssm-us-west-1/latest/linux_amd64/amazon-ssm-agent.rpm
+          start amazon-ssm-agent
           yum install -y aws-cfn-bootstrap
           /opt/aws/bin/cfn-init -v --region ${AWS::Region} --stack ${AWS::StackName} --resource LaunchConfiguration
           /opt/aws/bin/cfn-signal -e $? --region ${AWS::Region} --stack ${AWS::StackName} --resource AutoScalingGroup
