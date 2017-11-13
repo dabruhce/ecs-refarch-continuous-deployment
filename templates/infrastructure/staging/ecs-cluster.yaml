@@ -58,7 +58,8 @@ Resources:
         }
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
-        - arn:aws:iam::290373986345:role/ecsInstanceRole
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM
+        - arn:aws:iam::290373986345:policy/ECS-CloudWatchLogs
 
   InstanceProfile:
     Type: AWS::IAM::InstanceProfile
