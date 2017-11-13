@@ -123,7 +123,7 @@ Resources:
         TargetGroup: !GetAtt LoadBalancer.Outputs.TargetGroup
         TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
 #LambdaBannercreateApigatewayGitHubRepo
-  LambdaBannercreateApigatewayPipeline:
+  LambdaBannercreateApigatewayDeploymentPipeline:
     Type: AWS::CloudFormation::Stack
     DependsOn: BeGaspSqsPaymentWorkerDeploymentPipeline
     Properties:
