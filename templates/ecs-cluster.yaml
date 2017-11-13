@@ -144,11 +144,11 @@ Resources:
       UserData:
         "Fn::Base64": !Sub |
           #!/bin/bash
+          yum install -y https://s3-us-west-1.amazonaws.com/amazon-ssm-us-west-1/latest/linux_amd64/amazon-ssm-agent.rpm 
+          start amazon-ssm-agent
           yum install -y aws-cfn-bootstrap
           /opt/aws/bin/cfn-init -v --region ${AWS::Region} --stack ${AWS::StackName} --resource LaunchConfiguration
           /opt/aws/bin/cfn-signal -e $? --region ${AWS::Region} --stack ${AWS::StackName} --resource AutoScalingGroup
-          yum install -y https://s3-us-east-1.amazonaws.com/amazon-ssm-region/latest/linux_amd64/amazon-ssm-agent.rpm
-          systemctl start amazon-ssm-agent
 
 
 Outputs:
