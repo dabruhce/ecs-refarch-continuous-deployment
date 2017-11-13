@@ -33,6 +33,11 @@ Parameters:
     Type: String
     Default: BeGaspSqsPaymentWorker
     Description: The repo name of the sample service.
+#LambdaBannercreateApigateway
+  LambdaBannercreateApigatewayGitHubRepo:
+    Type: String
+    Default: BeGaspSqsPaymentWorker
+    Description: The repo name of the sample service.
 
   GitHubToken:
     Type: String
@@ -55,6 +60,8 @@ Metadata:
         default: "Repo"
       LambdaLivestreamcaptureApigatewayGitHubRepo:
         default: "Repo"
+      LambdaBannercreateApigatewayGitHubRepo:
+        default: "Repo"
       GitHubToken:
         default: "Personal Access Token"
     ParameterGroups:
@@ -68,6 +75,7 @@ Metadata:
           - BeGaspSqsPaymentWorkerGitHubRepo
           - EcsEthereumNetworkNodeGitHubRepo
           - LambdaLivestreamcaptureApigatewayGitHubRepo
+          - LambdaBannercreateApigatewayGitHubRepo
 
 Resources:
   Cluster:
@@ -114,6 +122,19 @@ Resources:
         GitHubBranch: !Ref GitHubBranch
         TargetGroup: !GetAtt LoadBalancer.Outputs.TargetGroup
         TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
+#LambdaBannercreateApigatewayGitHubRepo
+  LambdaBannercreateApigatewayPipeline:
+    Type: AWS::CloudFormation::Stack
+    DependsOn: BeGaspSqsPaymentWorkerDeploymentPipeline
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/ecs-begasp-continuous-deployment-us-east-1/templates/services/lambda/lambda-livestreamcapture-apigateway/deployment-pipeline.yaml
+      Parameters:
+        GitHubUser: !Ref GitHubUser
+        GitHubToken: !Ref GitHubToken
+        LambdaBannercreateApigatewayGitHubRepo: !Ref LambdaBannercreateApigatewayGitHubRepo
+        GitHubBranch: !Ref GitHubBranch
+        TemplateBucket: !Sub ecs-begasp-continuous-deployment-${AWS::Region}
+        AwsCfnStack: !Ref AWS::StackName
 
   LambdaLivestreamcaptureApigatewayPipeline:
     Type: AWS::CloudFormation::Stack
@@ -164,7 +185,6 @@ Resources:
         VpcCIDR: 10.215.0.0/16
         Subnet1CIDR: 10.215.10.0/24
         Subnet2CIDR: 10.215.20.0/24
-
 
 Outputs:
   TestRpcServiceUrl:

@@ -1,5 +1,5 @@
 Parameters:
-  LambdaLivestreamcaptureApigatewayGitHubRepo:
+  LambdaBannercreateApigatewayGitHubRepo:
     Type: String
 
   GitHubBranch:
@@ -14,6 +14,8 @@ Parameters:
   TemplateBucket:
     Type: String
 
+  AwsCfnStack:
+    Type: String
 
 Resources:
   Repository:
@@ -186,6 +188,8 @@ Resources:
             Value: !Ref AWS::Region
           - Name: ENVIRONMENT
             Value: staging
+          - Name: StackName
+            Value: !Ref AwsCfnStack
       Name: !Ref AWS::StackName
       ServiceRole: !Ref CodeBuildServiceRole
 
@@ -216,9 +220,12 @@ Resources:
             Value: !Ref AWS::Region
           - Name: ENVIRONMENT
             Value: production
-      Name: lambda-livestreamcapture-apigateway-production
+          - Name: StackName
+            Value: !Ref AwsCfnStack
+      Name: lambda-bannercreate-apigateway-production
       ServiceRole: !Ref CodeBuildServiceRole
-
+#add to environment
+#!Ref GitHubBranch
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
@@ -238,7 +245,7 @@ Resources:
                 Provider: GitHub
               Configuration:
                 Owner: !Ref GitHubUser
-                Repo: !Ref LambdaLivestreamcaptureApigatewayGitHubRepo
+                Repo: !Ref LambdaBannercreateApigatewayGitHubRepo
                 Branch: !Ref GitHubBranch
                 OAuthToken: !Ref GitHubToken
               OutputArtifacts:
