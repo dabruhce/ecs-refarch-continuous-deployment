@@ -295,5 +295,5 @@ Resources:
               RunOrder: 1
 
 Outputs:
-  LambdaLivestreamcaptureApigatewayGitHubRepo:
+  LambdaBannercreateApigatewayDeploymentPipeline:
     Value: !Sub https://console.aws.amazon.com/codepipeline/home?region=${AWS::Region}#/view/${Pipeline}
